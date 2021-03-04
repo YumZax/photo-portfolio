@@ -1,0 +1,22 @@
+{
+  "name": "juju",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YumZax/juju.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YumZax/juju/issues"
+  },
+  "homepage": "https://github.com/YumZax/juju#readme",
+  "devDependencies": {
+    "http-server": "^0.12.3"
+  }
+}
