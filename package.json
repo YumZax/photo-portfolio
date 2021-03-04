@@ -20,7 +20,7 @@
     "url": "https://github.com/YumZax/juju/issues"
   },
   "homepage": "https://github.com/YumZax/juju#readme",
-  "devDependencies": {
+  "dependencies": {
     "http-server": "^0.12.3"
   }
 }
