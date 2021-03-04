@@ -7,6 +7,10 @@
     "build": "npm i",
     "start": "http-server public"
   },
+  "engines": {
+    "node": ">= 6.9.4",
+    "npm": ">= 4.4.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/YumZax/juju.git"
