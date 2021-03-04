@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "heroku-prebuild": "npm i",
-    "start": "http-server --port $PORT public"
+    "start": "http-server public --port $PORT "
   },
   "engines": {
     "node": "14.5"
