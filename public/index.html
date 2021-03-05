@@ -1,11 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Julia Weppler</title>
-  </head>
-<body>
 
-<img src="images/sophia_01028.jpg"></img>
+<head>
+  <title>Julia Weppler</title>
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    #overlay{
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      visibility: hidden;
+    }
+
+    #overlay img{
+      width: 100%;
+    }
+
+    #flex-wrapper {
+      height: 100%;
+    }
+
+    .img-group {
+      width: 100%;
+    }
+
+    .img-group img {
+      z-index: 1;
+      width: 100%;
+    }
+
+    /* SOPHIA */
+    #flex-wrapper #sophia img {
+      max-width: 25%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      visibility: hidden;
+    }
+
+    #sophia, #jule {
+      height: 1200px;
+    }
+
+    #sophia img:hover,
+    #jule img:hover {
+      position: absolute;
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    /* JULE */
+    #jule img,
+    #sophia img {
+      transition: left 2s, top 2s;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="overlay"></div>
+  <div id="flex-wrapper">
+    <div class="img-group" id="sophia">
+      <img src="images/sophia_01028.jpg"></img>
+      <img src="images/sophia_01049 3.jpg"></img>
+      <img src="images/sophia_bot.garten032.jpg"></img>
+    </div>
+    <div class="img-group" id="jule">
+      <img src="images/jule_reifen_2019241.jpeg"></img>
+      <img src="images/jule_reifen_2019253.jpg"></img>
+      <img src="images/jule_reifen_2019254.jpg"></img>
+    </div>
+    <div class="img-group" id="scan">
+      <img src="images/scan069.jpg"></img>
+      <img src="images/scan073.jpg"></img>
+      <img src="images/scan074.jpg"></img>
+      <img src="images/scan105.jpg"></img>
+      <img src="images/scan106.jpg"></img>
+      <img src="images/scan111.jpg"></img>
+    </div>
+    <div class="img-group" id="prag">
+      <img src="images/prag35.tif"></img>
+      <img src="images/prag36.tif"></img>
+      <img src="images/prag38.tif"></img>
+
+    </div>
+
+  </div>
+
 
 </body>
+<script>
+  // COMMON
+  document.querySelectorAll('img').forEach((i) => {
+    i.addEventListener('click', (e) => {
+      const overlay = document.getElementById('overlay')
+      overlay.innerHTML = "";
+      overlay.style.visibility = "visible";
+      const zoomedImg = document.createElement('img');
+      zoomedImg.setAttribute('src',i.getAttribute('src'));
+      overlay.appendChild(zoomedImg);
+    });
+  })
+  // RANDOM SIZE SOPHIA
+  document.querySelectorAll('#sophia img').forEach((img, index) => {
+    console.log(index)
+    img.style.position = "absolute";
+    const position = `${(index)*25 + Math.floor(Math.random()*25)}%`;
+    const positionY = `${Math.floor(Math.random()*500)}px`;
+    const imgSize = `${100+Math.floor(Math.random()*500)}px`;
+    console.log(position)
+    img.style.left = position;
+    img.style.top = positionY;
+    img.style.width = imgSize;
+    img.style.visibility = "visible";
+  })
+
+   // RANDOM SIZE JULE
+   const juleRandomArrange = (changeSize) => {
+    document.querySelectorAll('#jule img').forEach((img, index) => {
+    console.log(index)
+    img.style.position = "absolute";
+    const position = `${(index)*25 + Math.floor(Math.random()*25)}%`;
+    const positionY = `${1200 + Math.floor(Math.random()*500)}px`;
+    const imgSize = `${100+Math.floor(Math.random()*500)}px`;
+    console.log(position)
+    img.style.left = position;
+    img.style.top = positionY;
+    if (changeSize){
+      img.style.width = imgSize;
+    }
+    
+    img.style.visibility = "visible";
+  })
+  }
+
+  // RANDOM SIZE SOPHIA
+  const sophiaRandomArrange = (changeSize) => {
+    document.querySelectorAll('#sophia img').forEach((img, index) => {
+    console.log(index)
+    img.style.position = "absolute";
+    const position = `${(index)*25 + Math.floor(Math.random()*25)}%`;
+    const positionY = `${Math.floor(Math.random()*500)}px`;
+    const imgSize = `${100+Math.floor(Math.random()*500)}px`;
+    console.log(position)
+    img.style.left = position;
+    img.style.top = positionY;
+    if (changeSize){
+      img.style.width = imgSize;
+    }
+    
+    img.style.visibility = "visible";
+  })
+  }
+   
+  juleRandomArrange(true);
+
+  // JuLE REARRANGE ON SCROLL
+  let scrollDone = false;
+  window.addEventListener("scroll", (event) => {
+    let scroll = this.scrollY;
+    if (!scrollDone && scroll > 800){
+      juleRandomArrange(false);
+      scrollDone = true;
+    }
+    if (scrollDone && scroll < 800){
+      sophiaRandomArrange(false)
+      scrollDone = false;
+    }
+  });
+
+</script>
+
 </html>
