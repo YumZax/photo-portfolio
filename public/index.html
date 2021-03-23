@@ -9,9 +9,36 @@
       margin: 0;
       padding: 0;
       width: 100%;
+      font-family: 'Source Code Pro', monospace;
     }
 
-    #overlay{
+    canvas{
+      position: absolute;
+      top: 161px;
+    left: 50%;
+    transform: translateX(-50%);
+      width: 55%;
+    height: 425px;
+    }
+    #header {
+      padding: 0;
+      height: 100px;
+      margin: 0;
+      color: black;
+      text-align: center;
+      font-size: 3vw;
+      padding-top: 50px;
+    }
+
+    #navbar li {
+      list-style: none;
+      font-size: 1.5vw;
+    }
+   
+   .contact {
+     margin-top: 327px;
+   }
+    #overlay {
       position: fixed;
       width: 100%;
       height: 100%;
@@ -19,7 +46,7 @@
       visibility: hidden;
     }
 
-    #overlay img{
+    #overlay img {
       width: 100%;
     }
 
@@ -45,7 +72,8 @@
       visibility: hidden;
     }
 
-    #sophia, #jule {
+    #sophia,
+    #jule {
       height: 1200px;
     }
 
@@ -61,14 +89,133 @@
     #sophia img {
       transition: left 2s, top 2s;
     }
-
   </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Source+Code+Pro&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
+  <div id="header">
+    JULIA WEPPLER
+  </div>
+  <nav id="navbar">
+    <ul>
+      <li style="color: pink;">
+        Pink
+      </li>
+      <li style="color: #fff900;">
+        Yellow
+      </li>
+      <li style="color: blue;">
+        Blue
+      </li >
+      <li style="color: orange;">
+        Orange
+      </li>
+      <li style="color: red;">
+        Red
+      </li>
+      <li style="color: green;">
+        Green
+      </li>
+      <li class="contact">
+        Contact
+      </li>
+    </ul>
+  </nav>
   <div id="overlay"></div>
   <div id="flex-wrapper">
-    <div class="img-group" id="sophia">
+
+<script type="text/javascript" src="paper-full.js"></script>
+<canvas width="3000" height="1500" id="myCanvas"></canvas>
+<script>
+		// Get a reference to the canvas object
+		var canvas = document.getElementById('myCanvas');
+		// Create an empty project and a view for the canvas:
+		paper.setup(canvas);
+
+    var raster = new paper.Raster({
+      "source": 'images/scan069.jpg',
+    }
+      );
+var loaded = false;
+
+raster.on('load', function() {
+	loaded = true;
+	onResize();
+});
+
+// Make the raster invisible:
+raster.visible = false;
+
+var lastPos = paper.view.center;
+function moveHandler(event) {
+	if (!loaded)
+		return;
+	if (lastPos.getDistance(event.point) < 10)
+		return;
+	lastPos = event.point;
+
+	var size = this.bounds.size.clone();
+  console.log(size)
+
+	var isLandscape = size.width > size.height;
+
+	// If the path is in landscape orientation, we're going to
+	// split the path horizontally, otherwise vertically:
+  if (isLandscape){
+    size.width = size.width/2
+  } else {
+    size.height = size.height/2
+  }
+	
+  console.log(size)
+	var path = new paper.Path.Rectangle({
+		point: this.bounds.topLeft.floor(),
+		size: size.ceil(),
+		onMouseMove: moveHandler
+	});
+	path.fillColor = raster.getAverageColor(path);
+
+	var path = new paper.Path.Rectangle({
+		point: isLandscape
+			? this.bounds.topCenter.ceil()
+			: this.bounds.leftCenter.ceil(),
+		size: size.floor(),
+		onMouseMove: moveHandler
+	});
+	path.fillColor = raster.getAverageColor(path);
+
+	this.remove();
+}
+
+
+
+
+
+function onResize(event) {
+	if (!loaded)
+		return;
+	paper.project.activeLayer.removeChildren();
+
+	// Transform the raster so that it fills the bounding rectangle
+	// of the view:
+	raster.fitBounds(paper.view.bounds, true);
+
+	// Create a path that fills the view, and fill it with
+	// the average color of the raster:
+	new paper.Path.Rectangle({
+		rectangle: paper.view.bounds,
+		fillColor: raster.getAverageColor(paper.view.bounds),
+		onMouseMove: moveHandler
+	});
+}
+
+	
+</script>
+
+    <!-- <div class="img-group" id="sophia">
       <img src="images/sophia_01028.jpg"></img>
       <img src="images/sophia_01049 3.jpg"></img>
       <img src="images/sophia_bot.garten032.jpg"></img>
@@ -91,7 +238,7 @@
       <img src="images/prag36.tif"></img>
       <img src="images/prag38.tif"></img>
 
-    </div>
+    </div> -->
 
   </div>
 
@@ -105,7 +252,7 @@
       overlay.innerHTML = "";
       overlay.style.visibility = "visible";
       const zoomedImg = document.createElement('img');
-      zoomedImg.setAttribute('src',i.getAttribute('src'));
+      zoomedImg.setAttribute('src', i.getAttribute('src'));
       overlay.appendChild(zoomedImg);
     });
   })
@@ -114,7 +261,7 @@
     console.log(index)
     img.style.position = "absolute";
     const position = `${(index)*25 + Math.floor(Math.random()*25)}%`;
-    const positionY = `${Math.floor(Math.random()*500)}px`;
+    const positionY = `${Math.floor(Math.random()*500)+100}px`;
     const imgSize = `${100+Math.floor(Math.random()*500)}px`;
     console.log(position)
     img.style.left = position;
@@ -123,60 +270,59 @@
     img.style.visibility = "visible";
   })
 
-   // RANDOM SIZE JULE
-   const juleRandomArrange = (changeSize) => {
+  // RANDOM SIZE JULE
+  const juleRandomArrange = (changeSize) => {
     document.querySelectorAll('#jule img').forEach((img, index) => {
-    console.log(index)
-    img.style.position = "absolute";
-    const position = `${(index)*25 + Math.floor(Math.random()*25)}%`;
-    const positionY = `${1200 + Math.floor(Math.random()*500)}px`;
-    const imgSize = `${100+Math.floor(Math.random()*500)}px`;
-    console.log(position)
-    img.style.left = position;
-    img.style.top = positionY;
-    if (changeSize){
-      img.style.width = imgSize;
-    }
-    
-    img.style.visibility = "visible";
-  })
+      console.log(index)
+      img.style.position = "absolute";
+      const position = `${(index)*25 + Math.floor(Math.random()*25)}%`;
+      const positionY = `${1200 + Math.floor(Math.random()*500)}px`;
+      const imgSize = `${100+Math.floor(Math.random()*500)}px`;
+      console.log(position)
+      img.style.left = position;
+      img.style.top = positionY;
+      if (changeSize) {
+        img.style.width = imgSize;
+      }
+
+      img.style.visibility = "visible";
+    })
   }
 
   // RANDOM SIZE SOPHIA
   const sophiaRandomArrange = (changeSize) => {
     document.querySelectorAll('#sophia img').forEach((img, index) => {
-    console.log(index)
-    img.style.position = "absolute";
-    const position = `${(index)*25 + Math.floor(Math.random()*25)}%`;
-    const positionY = `${Math.floor(Math.random()*500)}px`;
-    const imgSize = `${100+Math.floor(Math.random()*500)}px`;
-    console.log(position)
-    img.style.left = position;
-    img.style.top = positionY;
-    if (changeSize){
-      img.style.width = imgSize;
-    }
-    
-    img.style.visibility = "visible";
-  })
+      console.log(index)
+      img.style.position = "absolute";
+      const position = `${(index)*25 + Math.floor(Math.random()*25)}%`;
+      const positionY = `${Math.floor(Math.random()*500)}px`;
+      const imgSize = `${100+Math.floor(Math.random()*500)}px`;
+      console.log(position)
+      img.style.left = position;
+      img.style.top = positionY;
+      if (changeSize) {
+        img.style.width = imgSize;
+      }
+
+      img.style.visibility = "visible";
+    })
   }
-   
+
   juleRandomArrange(true);
 
   // JuLE REARRANGE ON SCROLL
   let scrollDone = false;
   window.addEventListener("scroll", (event) => {
     let scroll = this.scrollY;
-    if (!scrollDone && scroll > 800){
+    if (!scrollDone && scroll > 800) {
       juleRandomArrange(false);
       scrollDone = true;
     }
-    if (scrollDone && scroll < 800){
+    if (scrollDone && scroll < 800) {
       sophiaRandomArrange(false)
       scrollDone = false;
     }
   });
-
 </script>
 
 </html>
