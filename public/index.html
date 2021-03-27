@@ -12,14 +12,15 @@
       font-family: 'Source Code Pro', monospace;
     }
 
-    canvas{
+    canvas {
       position: absolute;
       top: 161px;
-    left: 50%;
-    transform: translateX(-50%);
+      left: 50%;
+      transform: translateX(-50%);
       width: 50vw;
-    height: 35vw;
+      height: 35vw;
     }
+
     #header {
       padding: 0;
       height: 100px;
@@ -28,31 +29,36 @@
       text-align: center;
       font-size: 2.5vw;
       padding-top: 50px;
+      cursor: pointer;
+    }
+
+    #main-content {
+      margin-left: 20%;
+      width: 80%;
+      min-height: 100%;
+      position: relative;
+    }
+
+    #navbar {
+      float: left;
+      width: 20%;
     }
 
     #navbar li {
       list-style: none;
       font-size: 1.5vw;
     }
-   
-   .contact {
-     margin-top: 30vw;
-   }
-    #overlay {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: 1000;
-      visibility: hidden;
+
+    .contact {
+      margin-top: 30vw;
     }
+
 
     #overlay img {
       width: 100%;
     }
 
-    #flex-wrapper {
-      height: 100%;
-    }
+
 
     .img-group {
       width: 100%;
@@ -64,30 +70,32 @@
     }
 
     /* SOPHIA */
-    #flex-wrapper #sophia img {
+    #main-content img {
       max-width: 25%;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      visibility: hidden;
     }
 
-    #sophia,
-    #jule {
-      height: 1200px;
-    }
 
-    #sophia img:hover,
-    #jule img:hover {
+    #main-content img:hover {
       position: absolute;
       cursor: pointer;
       z-index: 999;
     }
 
     /* JULE */
-    #jule img,
-    #sophia img {
+    #main-content img {
       transition: left 2s, top 2s;
+    }
+
+    .clickable {
+      cursor: pointer;
+    }
+
+    .separator {
+      display: block;
+      height: 500px;
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -96,126 +104,108 @@
 </head>
 
 <body>
-  <div id="header">
+  <div onclick="showCanvas()" id="header">
     JULIA WEPPLER
   </div>
   <nav id="navbar">
     <ul>
-      <li style="color: pink;">
+      <li onclick="loadImgs('nude')" class="colorChoose clickable" style="color: #Ddc398;">
+        Nude
+      </li>
+      <li onclick="loadImgs('pink')" class="colorChoose clickable" style="color: #E79ce9;">
         Pink
       </li>
-      <li style="color: #fff900;">
+      <li onclick="loadImgs('yellow')" class="colorChoose clickable" style="color: #F9e156;">
         Yellow
       </li>
-      <li style="color: blue;">
+      <li onclick="loadImgs('blue')" class="colorChoose clickable" style="color: #4d92e5;">
         Blue
-      </li >
-      <li style="color: orange;">
+      </li>
+      <li onclick="loadImgs('orange')" class="colorChoose clickable" style="color: #Fc9c42;">
         Orange
       </li>
-      <li style="color: red;">
+      <li onclick="loadImgs('red')" class="colorChoose clickable" style="color: #D64545;">
         Red
       </li>
-      <li style="color: green;">
+      <li onclick="loadImgs('green')" class="colorChoose clickable" style="color: #69b551;">
         Green
       </li>
-      <li class="contact">
+      <li onclick="loadImgs('black')" class="colorChoose clickable" style="color: black;">
+        Black
+      </li>
+      <li onclick="loadImgs('lilac')" class="colorChoose clickable" style="color: #A397df;">
+        Lilac
+      </li>
+      <li class=" clickable contact">
         Contact
       </li>
     </ul>
   </nav>
   <div id="overlay"></div>
-  <div id="flex-wrapper">
+  <canvas width="3000" height="1500" id="myCanvas"></canvas>
+  <div id="main-content"></div>
 
-<script type="text/javascript" src="paper-full.js"></script>
-<canvas width="3000" height="1500" id="myCanvas"></canvas>
-<script>
-		// Get a reference to the canvas object
-		var canvas = document.getElementById('myCanvas');
-		// Create an empty project and a view for the canvas:
-		paper.setup(canvas);
+  <script type="text/javascript" src="paper-full.js"></script>
+  <script>
+    var canvas = document.getElementById('myCanvas');
+    paper.setup(canvas);
 
     var raster = new paper.Raster({
       "source": 'images/scan069.jpg',
+    });
+    var loaded = false;
+
+    raster.on('load', function () {
+      loaded = true;
+      onResize();
+    });
+
+    raster.visible = false;
+    var lastPos = paper.view.center;
+
+    function moveHandler(event) {
+      if (!loaded)
+        return;
+      lastPos = event.point;
+      var size = this.bounds.size.clone();
+      var isLandscape = size.width > size.height;
+      if (isLandscape) {
+        size.width = size.width / 2
+      } else {
+        size.height = size.height / 2
+      }
+      var path = new paper.Path.Rectangle({
+        point: this.bounds.topLeft.floor(),
+        size: size.ceil(),
+        onMouseMove: moveHandler
+      });
+      path.fillColor = raster.getAverageColor(path);
+      var path = new paper.Path.Rectangle({
+        point: isLandscape ?
+          this.bounds.topCenter.ceil() : this.bounds.leftCenter.ceil(),
+        size: size.floor(),
+        onMouseMove: moveHandler
+      });
+      path.fillColor = raster.getAverageColor(path);
+      this.remove();
     }
-      );
-var loaded = false;
 
-raster.on('load', function() {
-	loaded = true;
-	onResize();
-});
+    function onResize(event) {
+      if (!loaded)
+        return;
+      paper.project.activeLayer.removeChildren();
+      raster.fitBounds(paper.view.bounds, true);
 
-// Make the raster invisible:
-raster.visible = false;
+      new paper.Path.Rectangle({
+        rectangle: paper.view.bounds,
+        fillColor: raster.getAverageColor(paper.view.bounds),
+        onMouseMove: moveHandler
+      });
 
-var lastPos = paper.view.center;
-function moveHandler(event) {
-	if (!loaded)
-		return;
-	if (lastPos.getDistance(event.point) < 10)
-		return;
-	lastPos = event.point;
+    }
+  </script>
 
-	var size = this.bounds.size.clone();
-  console.log(size)
-
-	var isLandscape = size.width > size.height;
-
-	// If the path is in landscape orientation, we're going to
-	// split the path horizontally, otherwise vertically:
-  if (isLandscape){
-    size.width = size.width/2
-  } else {
-    size.height = size.height/2
-  }
-	
-  console.log(size)
-	var path = new paper.Path.Rectangle({
-		point: this.bounds.topLeft.floor(),
-		size: size.ceil(),
-		onMouseMove: moveHandler
-	});
-	path.fillColor = raster.getAverageColor(path);
-
-	var path = new paper.Path.Rectangle({
-		point: isLandscape
-			? this.bounds.topCenter.ceil()
-			: this.bounds.leftCenter.ceil(),
-		size: size.floor(),
-		onMouseMove: moveHandler
-	});
-	path.fillColor = raster.getAverageColor(path);
-
-	this.remove();
-}
-
-
-
-
-
-function onResize(event) {
-	if (!loaded)
-		return;
-	paper.project.activeLayer.removeChildren();
-
-	// Transform the raster so that it fills the bounding rectangle
-	// of the view:
-	raster.fitBounds(paper.view.bounds, true);
-
-	// Create a path that fills the view, and fill it with
-	// the average color of the raster:
-	new paper.Path.Rectangle({
-		rectangle: paper.view.bounds,
-		fillColor: raster.getAverageColor(paper.view.bounds),
-		onMouseMove: moveHandler
-	});
-}
-
-	
-</script>
-
-    <!-- <div class="img-group" id="sophia">
+  <!-- <div class="img-group" id="sophia">
       <img src="images/sophia_01028.jpg"></img>
       <img src="images/sophia_01049 3.jpg"></img>
       <img src="images/sophia_bot.garten032.jpg"></img>
@@ -240,89 +230,100 @@ function onResize(event) {
 
     </div> -->
 
-  </div>
 
 
 </body>
 <script>
-  // COMMON
-  document.querySelectorAll('img').forEach((i) => {
-    i.addEventListener('click', (e) => {
-      const overlay = document.getElementById('overlay')
-      overlay.innerHTML = "";
-      overlay.style.visibility = "visible";
-      const zoomedImg = document.createElement('img');
-      zoomedImg.setAttribute('src', i.getAttribute('src'));
-      overlay.appendChild(zoomedImg);
+  const addImgsToView = (imgGroups) => {
+    document.getElementById('myCanvas').style.display = "none";
+    document.getElementById('main-content').innerHTML = "";
+    let grpNo = 0;
+    for (const imgGroup of imgGroups){
+      for (const img of imgGroup) {
+        const imgEl = document.createElement('img')
+        imgEl.setAttribute('src', img);
+        imgEl.dataset.grpNo = grpNo;
+        document.getElementById('main-content').appendChild(imgEl)
+      }
+      grpNo += 1;
+      bindImageMovement();
+    }
+    
+    
+  }
+
+
+  const showCanvas = () => {
+    document.getElementById('main-content').innerHTML = ""
+    document.getElementById('myCanvas').style.display = "block";
+  }
+
+  const loadImgs = (color) => {
+    switch (color) {
+      case "nude":
+        addImgsToView([["images/jpg/nude3.jpg"]])
+        break;
+      case "pink":
+        addImgsToView([["images/jpg/pink1.jpg"]])
+        break;
+      case "blue":
+        break;
+      case "green":
+        addImgsToView([["images/jpg/green1.jpg", "images/jpg/green2.jpg", "images/jpg/green3.jpg",], ["images/jpg/green4 (alone).jpg"]])
+        break;
+      case "yellow":
+        addImgsToView([["images/jpg/yellow1.jpg", "images/jpg/yellow2.jpg", "images/jpg/yellow3 .jpg",
+          "images/jpg/yellow4.jpg"
+        ]])
+        break;
+      case "lilac":
+        addImgsToView([["images/jpg/lilac1.jpg"]])
+        break;
+      case "orange":
+        addImgsToView([["images/jpg/orange1.jpg", "images/jpg/orange2.jpg", "images/jpg/orange3.jpg"]])
+        break;
+      case "red":
+        break;
+      case "black":
+        addImgsToView([["images/jpg/black1.jpg", "images/jpg/black2.jpg", "images/jpg/black3.jpg",
+          "images/jpg/black4.jpg"
+        ]])
+        break;
+    }
+  }
+
+  const bindImageMovement = () => {
+    const imgCount = document.querySelectorAll('#main-content img').length;
+    const moveImgs = () => {
+      document.querySelectorAll('#main-content img').forEach((img, index) => {
+        img.style.position = "absolute";
+        const grpNo = img.dataset.grpNo;
+        const position = `${(index)*((100/imgCount) - 10) + Math.floor(Math.random()*((100/imgCount)))}%`;
+        const positionY = `${Math.floor(Math.random()*500)+100+(grpNo * 1000)}px`;
+        const imgSize = `${100+Math.floor(Math.random()*500)}px`;
+        img.style.left = position;
+        img.style.top = positionY;
+        img.style.width = imgSize;
+        img.style.visibility = "visible";
+      })
+    }
+    moveImgs();
+    let scrollDone = false;
+
+    window.addEventListener("scroll", (event) => {
+      let scroll = this.scrollY;
+      if (!scrollDone && scroll > 500) {
+        moveImgs();
+        scrollDone = true;
+      }
+      if (scrollDone && scroll < 500) {
+        moveImgs();
+        scrollDone = false;
+      }
     });
-  })
-  // RANDOM SIZE SOPHIA
-  document.querySelectorAll('#sophia img').forEach((img, index) => {
-    console.log(index)
-    img.style.position = "absolute";
-    const position = `${(index)*25 + Math.floor(Math.random()*25)}%`;
-    const positionY = `${Math.floor(Math.random()*500)+100}px`;
-    const imgSize = `${100+Math.floor(Math.random()*500)}px`;
-    console.log(position)
-    img.style.left = position;
-    img.style.top = positionY;
-    img.style.width = imgSize;
-    img.style.visibility = "visible";
-  })
 
-  // RANDOM SIZE JULE
-  const juleRandomArrange = (changeSize) => {
-    document.querySelectorAll('#jule img').forEach((img, index) => {
-      console.log(index)
-      img.style.position = "absolute";
-      const position = `${(index)*25 + Math.floor(Math.random()*25)}%`;
-      const positionY = `${1200 + Math.floor(Math.random()*500)}px`;
-      const imgSize = `${100+Math.floor(Math.random()*500)}px`;
-      console.log(position)
-      img.style.left = position;
-      img.style.top = positionY;
-      if (changeSize) {
-        img.style.width = imgSize;
-      }
-
-      img.style.visibility = "visible";
-    })
   }
 
-  // RANDOM SIZE SOPHIA
-  const sophiaRandomArrange = (changeSize) => {
-    document.querySelectorAll('#sophia img').forEach((img, index) => {
-      console.log(index)
-      img.style.position = "absolute";
-      const position = `${(index)*25 + Math.floor(Math.random()*25)}%`;
-      const positionY = `${Math.floor(Math.random()*500)}px`;
-      const imgSize = `${100+Math.floor(Math.random()*500)}px`;
-      console.log(position)
-      img.style.left = position;
-      img.style.top = positionY;
-      if (changeSize) {
-        img.style.width = imgSize;
-      }
-
-      img.style.visibility = "visible";
-    })
-  }
-
-  juleRandomArrange(true);
-
-  // JuLE REARRANGE ON SCROLL
-  let scrollDone = false;
-  window.addEventListener("scroll", (event) => {
-    let scroll = this.scrollY;
-    if (!scrollDone && scroll > 800) {
-      juleRandomArrange(false);
-      scrollDone = true;
-    }
-    if (scrollDone && scroll < 800) {
-      sophiaRandomArrange(false)
-      scrollDone = false;
-    }
-  });
 </script>
 
 </html>
