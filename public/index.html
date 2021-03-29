@@ -259,12 +259,22 @@
   const loadImgs = (color) => {
     switch (color) {
       case "beige":
-        addImgsToView([["images/jpg/nude1.jpg","images/jpg/nude2.jpg"],["images/jpg/nude4.jpg", "images/jpg/nude5.jpg","images/jpg/nude6.jpg"],["images/jpg/nude3.jpg"]])
+        addImgsToView([
+          ["images/jpg/nude1.jpg","images/jpg/nude2.jpg"],
+          ["images/jpg/nude4.jpg", "images/jpg/nude5.jpg","images/jpg/nude6.jpg"],
+          ["images/jpg/nude3.jpg"],
+          ["images/jpg/trois/beige01.jpeg", "images/jpg/trois/beige02.jpeg", "images/jpg/trois/beige03.jpeg"]
+        ])
         break;
       case "pink":
-        addImgsToView([["images/jpg/pink1.jpg"]])
+        addImgsToView([["images/jpg/pink1.jpg"],
+        ["images/jpg/trois/pink1.jpg", "images/jpg/trois/pink2.jpg", "images/jpg/trois/pink3.jpg"]
+      ])
         break;
       case "blue":
+        addImgsToView([[
+        "images/jpg/trois/blue1.jpeg", "images/jpg/trois/blue1.jpg", "images/jpg/trois/blue2.jpeg", "images/jpg/trois/blue2.jpg", "images/jpg/trois/blue3.jpeg", "images/jpg/trois/blue3.jpg"
+        ]])
         break;
       case "green":
         addImgsToView([["images/jpg/green1.jpg", "images/jpg/green2.jpg", "images/jpg/green3.jpg",], ["images/jpg/green4 (alone).jpg"]])
@@ -272,25 +282,39 @@
       case "yellow":
         addImgsToView([["images/jpg/yellow1.jpg", "images/jpg/yellow2.jpg", "images/jpg/yellow3 .jpg"],[
           "images/jpg/yellow4.jpg", "images/jpg/yellow5.jpg"
-        ]])
+        ],
+        ["images/jpg/trois/yellow alone.jpeg"],
+        ["images/jpg/trois/yellow alone.jpg"],
+        ["images/jpg/trois/yellow01.jpg", "images/jpg/trois/yellow02.jpg","images/jpg/trois/yellow03.jpg"]
+      ])
         break;
       case "lilac":
         addImgsToView([["images/jpg/lilac1.jpg","images/jpg/lilac2.jpg","images/jpg/lilac3.jpg"]])
         break;
       case "orange":
-        addImgsToView([["images/jpg/orange1.jpg", "images/jpg/orange2.jpg", "images/jpg/orange3.jpg"]])
+        addImgsToView([
+          ["images/jpg/orange1.jpg", "images/jpg/orange2.jpg", "images/jpg/orange3.jpg"],
+          ["images/jpg/trois/orange alone.jpg"]
+        ])
         break;
       case "red":
-        addImgsToView([["images/jpg/red1.jpg", "images/jpg/red2.jpg"]])
+        addImgsToView([["images/jpg/red1.jpg", "images/jpg/red2.jpg"],
+        ["images/jpg/trois/red alone 2.jpeg"],
+        ["images/jpg/trois/red glass 1.jpeg", "images/jpg/trois/red glass 2.jpeg"],
+        ["images/jpg/trois/red1.jpg","images/jpg/trois/red2.jpeg","images/jpg/trois/red3.jpeg","images/jpg/trois/red4.jpeg"]
+      ])
 
         break;
       case "black":
-        addImgsToView([["images/jpg/black1.jpg", "images/jpg/black2.jpg", "images/jpg/black3.jpg",
-          "images/jpg/black4.jpg"
-        ]])
+        addImgsToView([
+          ["images/jpg/black1.jpg", "images/jpg/black2.jpg", "images/jpg/black3.jpg","images/jpg/black4.jpg"],
+          ["images/jpg/trois/black1.jpg", "images/jpg/trois/black01.jpg", "images/jpg/trois/black2.jpeg", "images/jpg/trois/black02.jpeg", "images/jpg/trois/black03.jpg"]
+        ])
         break;
         case "white":
-          addImgsToView([["images/jpg/white1.jpg", "images/jpg/white2.jpg"]])
+          addImgsToView([["images/jpg/white1.jpg", "images/jpg/white2.jpg"],
+          ["images/jpg/trois/white alone.jpeg"]
+        ])
         break;
     }
   }
