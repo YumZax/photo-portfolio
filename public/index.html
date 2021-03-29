@@ -9,9 +9,19 @@
       margin: 0;
       padding: 0;
       width: 100%;
-      font-family: 'Source Code Pro', monospace;
+      font-family: 'Chivo', monospace;
+      cursor: url(images/cursor/Sea_Vacation_Pixel_Cursor.png) 2 2, pointer;
+
     }
 
+    #footer{
+      position: fixed;
+      bottom: 0;
+      text-align: center;
+      opacity: .5;
+      width:100%;
+      background-color: white;
+    }
     canvas {
       position: absolute;
       top: 15vw;
@@ -27,12 +37,18 @@
       margin: 0;
       color: black;
       text-align: center;
-      font-size: 2.5vw;
+      font-size: 2.8vw;
       padding-top: 50px;
-      cursor: pointer;
-      position: relative;
+      position: fixed;
+      width: 100%;
+      z-index: 9999;
+      background-color: white;
+      opacity: .9;
     }
 
+    #header .name{
+      cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer.png) 2 2, pointer;
+    }
     #header .contact{
       position: absolute;
       font-size: 15px;
@@ -41,7 +57,8 @@
       font-size: 1.3vw;
       border:1px solid black;
       padding:5px;
-      transform: translateX(-50%)
+      transform: translateX(-50%);
+      cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer.png) 2 2, pointer;
     }
     #main-content {
       margin-left: 20%;
@@ -107,7 +124,7 @@
 
     #main-content img:hover {
       position: absolute;
-      cursor: pointer;
+      cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer.png) 2 2, pointer;
       z-index: 999;
     }
 
@@ -117,7 +134,7 @@
     }
 
     .clickable {
-      cursor: pointer;
+      cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer.png) 2 2, pointer;
     }
 
     .separator {
@@ -125,9 +142,8 @@
       height: 500px;
     }
   </style>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Source+Code+Pro&display=swap"
-    rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -138,8 +154,8 @@
     
     <nav id="navbar">
       <ul>
-        <li onclick="loadImgs('nude')" class="colorChoose clickable" style="color: #Ddc398;">
-          Nude
+        <li onclick="loadImgs('beige')" class="colorChoose clickable" style="color: #Ddc398;">
+          Beige
         </li>
         <li onclick="loadImgs('pink')" class="colorChoose clickable" style="color: #E79ce9;">
           Pink
@@ -153,6 +169,9 @@
         <li onclick="loadImgs('orange')" class="colorChoose clickable" style="color: #Fc9c42;">
           Orange
         </li>
+        <li onclick="loadImgs('white')" class="colorChoose clickable" style="color: white; text-shadow: 4px 2px 20px #008000">
+          White
+        </li>
         <li onclick="loadImgs('red')" class="colorChoose clickable" style="color: #D64545;">
           Red
         </li>
@@ -165,6 +184,7 @@
         <li onclick="loadImgs('lilac')" class="colorChoose clickable" style="color: #A397df;">
           Lilac
         </li>
+       
       </ul>
     </nav>
   </div>
@@ -172,8 +192,137 @@
   <div id="overlay"></div>
   <canvas width="3000" height="1500" id="myCanvas"></canvas>
   <div id="main-content"></div>
+  <div id="footer">
+    © 2021 - Julia Weppler - All rights reserved
+  </div>
+  
 
-  <script type="text/javascript" src="paper-full.js"></script>
+  <!-- <div class="img-group" id="sophia">
+      <img src="images/sophia_01028.jpg"></img>
+      <img src="images/sophia_01049 3.jpg"></img>
+      <img src="images/sophia_bot.garten032.jpg"></img>
+    </div>
+    <div class="img-group" id="jule">
+      <img src="images/jule_reifen_2019241.jpeg"></img>
+      <img src="images/jule_reifen_2019253.jpg"></img>
+      <img src="images/jule_reifen_2019254.jpg"></img>
+    </div>
+    <div class="img-group" id="scan">
+      <img src="images/scan069.jpg"></img>
+      <img src="images/scan073.jpg"></img>
+      <img src="images/scan074.jpg"></img>
+      <img src="images/scan105.jpg"></img>
+      <img src="images/scan106.jpg"></img>
+      <img src="images/scan111.jpg"></img>
+    </div>
+    <div class="img-group" id="prag">
+      <img src="images/prag35.tif"></img>
+      <img src="images/prag36.tif"></img>
+      <img src="images/prag38.tif"></img>
+
+    </div> -->
+
+
+
+</body>
+<script>
+  const addImgsToView = (imgGroups) => {
+    document.getElementById('myCanvas').style.display = "none";
+    document.getElementById('main-content').innerHTML = "";
+    let grpNo = 0;
+    for (const imgGroup of imgGroups){
+      for (const img of imgGroup) {
+        const imgEl = document.createElement('img')
+        imgEl.setAttribute('src', img);
+        imgEl.dataset.grpNo = grpNo;
+        document.getElementById('main-content').appendChild(imgEl)
+      }
+      grpNo += 1;
+      bindImageMovement();
+    }
+    
+    
+  }
+
+
+  const showCanvas = () => {
+    document.getElementById('main-content').innerHTML = ""
+    document.getElementById('myCanvas').style.display = "block";
+  }
+
+  const loadImgs = (color) => {
+    switch (color) {
+      case "beige":
+        addImgsToView([["images/jpg/nude1.jpg","images/jpg/nude2.jpg"],["images/jpg/nude4.jpg", "images/jpg/nude5.jpg","images/jpg/nude6.jpg"],["images/jpg/nude3.jpg"]])
+        break;
+      case "pink":
+        addImgsToView([["images/jpg/pink1.jpg"]])
+        break;
+      case "blue":
+        break;
+      case "green":
+        addImgsToView([["images/jpg/green1.jpg", "images/jpg/green2.jpg", "images/jpg/green3.jpg",], ["images/jpg/green4 (alone).jpg"]])
+        break;
+      case "yellow":
+        addImgsToView([["images/jpg/yellow1.jpg", "images/jpg/yellow2.jpg", "images/jpg/yellow3 .jpg"],[
+          "images/jpg/yellow4.jpg", "images/jpg/yellow5.jpg"
+        ]])
+        break;
+      case "lilac":
+        addImgsToView([["images/jpg/lilac1.jpg","images/jpg/lilac2.jpg","images/jpg/lilac3.jpg"]])
+        break;
+      case "orange":
+        addImgsToView([["images/jpg/orange1.jpg", "images/jpg/orange2.jpg", "images/jpg/orange3.jpg"]])
+        break;
+      case "red":
+        addImgsToView([["images/jpg/red1.jpg", "images/jpg/red2.jpg"]])
+
+        break;
+      case "black":
+        addImgsToView([["images/jpg/black1.jpg", "images/jpg/black2.jpg", "images/jpg/black3.jpg",
+          "images/jpg/black4.jpg"
+        ]])
+        break;
+        case "white":
+          addImgsToView([["images/jpg/white1.jpg", "images/jpg/white2.jpg"]])
+        break;
+    }
+  }
+
+  const bindImageMovement = () => {
+    const imgCount = document.querySelectorAll('#main-content img').length;
+    const moveImgs = () => {
+      document.querySelectorAll('#main-content img').forEach((img, index) => {
+        img.style.position = "absolute";
+        const grpNo = img.dataset.grpNo;
+        const position = `${(index)*((100/imgCount) - 10) + Math.floor(Math.random()*((100/imgCount)))}%`;
+        const positionY = `${Math.floor(Math.random()*500)+100+(grpNo * 1000)}px`;
+        const imgSize = `${100+Math.floor(Math.random()*500)}px`;
+        img.style.left = position;
+        img.style.top = positionY;
+        img.style.width = imgSize;
+        img.style.visibility = "visible";
+      })
+    }
+    moveImgs();
+    let scrollDone = false;
+
+    window.addEventListener("scroll", (event) => {
+      let scroll = this.scrollY;
+      if (!scrollDone && scroll > 500) {
+        moveImgs();
+        scrollDone = true;
+      }
+      if (scrollDone && scroll < 500) {
+        moveImgs();
+        scrollDone = false;
+      }
+    });
+
+  }
+
+</script>
+<script type="text/javascript" src="paper-full.js"></script>
   <script>
     var canvas = document.getElementById('myCanvas');
     paper.setup(canvas);
@@ -232,126 +381,4 @@
 
     }
   </script>
-
-  <!-- <div class="img-group" id="sophia">
-      <img src="images/sophia_01028.jpg"></img>
-      <img src="images/sophia_01049 3.jpg"></img>
-      <img src="images/sophia_bot.garten032.jpg"></img>
-    </div>
-    <div class="img-group" id="jule">
-      <img src="images/jule_reifen_2019241.jpeg"></img>
-      <img src="images/jule_reifen_2019253.jpg"></img>
-      <img src="images/jule_reifen_2019254.jpg"></img>
-    </div>
-    <div class="img-group" id="scan">
-      <img src="images/scan069.jpg"></img>
-      <img src="images/scan073.jpg"></img>
-      <img src="images/scan074.jpg"></img>
-      <img src="images/scan105.jpg"></img>
-      <img src="images/scan106.jpg"></img>
-      <img src="images/scan111.jpg"></img>
-    </div>
-    <div class="img-group" id="prag">
-      <img src="images/prag35.tif"></img>
-      <img src="images/prag36.tif"></img>
-      <img src="images/prag38.tif"></img>
-
-    </div> -->
-
-
-
-</body>
-<script>
-  const addImgsToView = (imgGroups) => {
-    document.getElementById('myCanvas').style.display = "none";
-    document.getElementById('main-content').innerHTML = "";
-    let grpNo = 0;
-    for (const imgGroup of imgGroups){
-      for (const img of imgGroup) {
-        const imgEl = document.createElement('img')
-        imgEl.setAttribute('src', img);
-        imgEl.dataset.grpNo = grpNo;
-        document.getElementById('main-content').appendChild(imgEl)
-      }
-      grpNo += 1;
-      bindImageMovement();
-    }
-    
-    
-  }
-
-
-  const showCanvas = () => {
-    document.getElementById('main-content').innerHTML = ""
-    document.getElementById('myCanvas').style.display = "block";
-  }
-
-  const loadImgs = (color) => {
-    switch (color) {
-      case "nude":
-        addImgsToView([["images/jpg/nude3.jpg"]])
-        break;
-      case "pink":
-        addImgsToView([["images/jpg/pink1.jpg"]])
-        break;
-      case "blue":
-        break;
-      case "green":
-        addImgsToView([["images/jpg/green1.jpg", "images/jpg/green2.jpg", "images/jpg/green3.jpg",], ["images/jpg/green4 (alone).jpg"]])
-        break;
-      case "yellow":
-        addImgsToView([["images/jpg/yellow1.jpg", "images/jpg/yellow2.jpg", "images/jpg/yellow3 .jpg",
-          "images/jpg/yellow4.jpg"
-        ]])
-        break;
-      case "lilac":
-        addImgsToView([["images/jpg/lilac1.jpg"]])
-        break;
-      case "orange":
-        addImgsToView([["images/jpg/orange1.jpg", "images/jpg/orange2.jpg", "images/jpg/orange3.jpg"]])
-        break;
-      case "red":
-        break;
-      case "black":
-        addImgsToView([["images/jpg/black1.jpg", "images/jpg/black2.jpg", "images/jpg/black3.jpg",
-          "images/jpg/black4.jpg"
-        ]])
-        break;
-    }
-  }
-
-  const bindImageMovement = () => {
-    const imgCount = document.querySelectorAll('#main-content img').length;
-    const moveImgs = () => {
-      document.querySelectorAll('#main-content img').forEach((img, index) => {
-        img.style.position = "absolute";
-        const grpNo = img.dataset.grpNo;
-        const position = `${(index)*((100/imgCount) - 10) + Math.floor(Math.random()*((100/imgCount)))}%`;
-        const positionY = `${Math.floor(Math.random()*500)+100+(grpNo * 1000)}px`;
-        const imgSize = `${100+Math.floor(Math.random()*500)}px`;
-        img.style.left = position;
-        img.style.top = positionY;
-        img.style.width = imgSize;
-        img.style.visibility = "visible";
-      })
-    }
-    moveImgs();
-    let scrollDone = false;
-
-    window.addEventListener("scroll", (event) => {
-      let scroll = this.scrollY;
-      if (!scrollDone && scroll > 500) {
-        moveImgs();
-        scrollDone = true;
-      }
-      if (scrollDone && scroll < 500) {
-        moveImgs();
-        scrollDone = false;
-      }
-    });
-
-  }
-
-</script>
-
 </html>
