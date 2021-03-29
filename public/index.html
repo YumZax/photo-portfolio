@@ -100,8 +100,36 @@
         text-decoration: none;
       }
 
-    
+    .colorChoose{
+      position: relative;
+    }
 
+    @keyframes bounce{
+      0%{
+        left: 0;
+        opacity: .8;
+      }
+
+      50%{
+        left: 80%;
+        opacity: .3
+      }
+
+      100%{
+        left: 0;
+        opacity: .8
+      }
+    }
+
+    .colorChoose:hover:after{
+      content: "―";
+      position: absolute;
+      bottom: -50%;
+      left: 0;
+      animation-name: bounce;
+      animation-iteration-count: infinite;
+      animation-duration: 3s;
+    }
 
     #overlay img {
       width: 100%;
