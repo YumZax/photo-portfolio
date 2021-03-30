@@ -121,7 +121,8 @@
       }
     }
 
-    .colorChoose:hover:after{
+    @media (pointer: fine){
+      .colorChoose:hover:after{
       content: "―";
       position: absolute;
       bottom: -50%;
@@ -129,7 +130,9 @@
       animation-name: bounce;
       animation-iteration-count: infinite;
       animation-duration: 3s;
+    }  
     }
+    
 
     #overlay img {
       width: 100%;
