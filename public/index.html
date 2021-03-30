@@ -121,7 +121,6 @@
       }
     }
 
-    @media (pointer: fine){
       .colorChoose:hover:after{
       content: "―";
       position: absolute;
@@ -131,7 +130,7 @@
       animation-iteration-count: infinite;
       animation-duration: 3s;
     }  
-    }
+
     
 
     #overlay img {
@@ -185,40 +184,40 @@
 
 <body>
   <div id="header">
-    <div onclick="showCanvas()" class="name">JULIA WEPPLER</div>
+    <div ontouchend="showCanvas()" onclick="showCanvas()" class="name">JULIA WEPPLER</div>
     
     <a class="clickable contact" href="mailto:juliaweppler@me.com">Contact</a>
     
     <nav id="navbar">
       <ul>
-        <li onclick="loadImgs('beige')" class="colorChoose clickable" style="color: #Ddc398;">
+        <li ontouchend="loadImgs('')" onclick="loadImgs('beige')" class="colorChoose clickable" style="color: #Ddc398;">
           beige
         </li>
-        <li onclick="loadImgs('pink')" class="colorChoose clickable" style="color: #E79ce9;">
+        <li ontouchend="loadImgs('pink')" onclick="loadImgs('pink')" class="colorChoose clickable" style="color: #E79ce9;">
           pink
         </li>
-        <li onclick="loadImgs('yellow')" class="colorChoose clickable" style="color: #F9e156;">
+        <li ontouchend="loadImgs('yellow')" onclick="loadImgs('yellow')" class="colorChoose clickable" style="color: #F9e156;">
           yellow
         </li>
-        <li onclick="loadImgs('blue')" class="colorChoose clickable" style="color: #4d92e5;">
+        <li ontouchend="loadImgs('blue')" onclick="loadImgs('blue')" class="colorChoose clickable" style="color: #4d92e5;">
           blue
         </li>
-        <li onclick="loadImgs('orange')" class="colorChoose clickable" style="color: #Fc9c42;">
+        <li ontouchend="loadImgs('orange')" onclick="loadImgs('orange')" class="colorChoose clickable" style="color: #Fc9c42;">
           orange
         </li>
-        <li onclick="loadImgs('white')" class="colorChoose clickable" style="color: white; text-shadow: 4px 2px 8px #69b551">
+        <li ontouchend="loadImgs('white')" onclick="loadImgs('white')" class="colorChoose clickable" style="color: white; text-shadow: 4px 2px 8px #69b551">
           white
         </li>
-        <li onclick="loadImgs('red')" class="colorChoose clickable" style="color: #D64545;">
+        <li ontouchend="loadImgs('red')" onclick="loadImgs('red')" class="colorChoose clickable" style="color: #D64545;">
           red
         </li>
-        <li onclick="loadImgs('green')" class="colorChoose clickable" style="color: #69b551;">
+        <li ontouchend="loadImgs('green')" onclick="loadImgs('green')" class="colorChoose clickable" style="color: #69b551;">
           green
         </li>
-        <li onclick="loadImgs('black')" class="colorChoose clickable" style="color: black;">
+        <li ontouchend="loadImgs('black')" onclick="loadImgs('black')" class="colorChoose clickable" style="color: black;">
           black
         </li>
-        <li onclick="loadImgs('lilac')" class="colorChoose clickable" style="color: #A397df;">
+        <li ontouchend="loadImgs('lilac')" onclick="loadImgs('lilac')" class="colorChoose clickable" style="color: #A397df;">
           lilac
         </li>
        
