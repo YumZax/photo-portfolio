@@ -13,7 +13,9 @@
       cursor: url(images/cursor/Sea_Vacation_Pixel_Cursor_small.png) 2 2, pointer;
 
     }
-
+    body{
+      margin-bottom: 100px;
+    }
     #footer{
       position: fixed;
       bottom: 0;
@@ -62,6 +64,9 @@
       cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer_small.png) 2 2, pointer;
     }
     #main-content {
+      top: 150px;
+      padding-top: 100px;
+      margin-bottom: 100px;
       margin-left: 20%;
       width: 80%;
       min-height: 100%;
@@ -154,6 +159,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      margin-bottom: 100px;
     }
 
 
@@ -175,6 +181,8 @@
     .separator {
       display: block;
       height: 500px;
+      position: absolute;
+      width: 100%;
     }
     .medium-zoom-image--opened{
       z-index: 1000;
@@ -281,6 +289,7 @@
       grpNo += 1;
       bindImageMovement();
       mediumZoom('[data-zoomable]');
+
     }
     
     
@@ -386,13 +395,15 @@
   }
 
   const bindImageMovement = () => {
+    let lastYPos = 0;
     const imgCount = document.querySelectorAll('#main-content img').length;
     const moveImgs = () => {
       document.querySelectorAll('#main-content img').forEach((img, index) => {
         img.style.position = "absolute";
         const grpNo = img.dataset.grpNo;
         const position = `${(index)*((100/imgCount) - 10) + Math.floor(Math.random()*((100/imgCount)))}%`;
-        const positionY = `${Math.floor(Math.random()*500)+150+(grpNo * 1000)}px`;
+        lastYPos = Math.floor(Math.random()*500)+(grpNo * 1000)
+        const positionY = `${lastYPos}px`;
         const imgSize = `${100+Math.floor(Math.random()*500)}px`;
         img.style.left = position;
         img.style.top = positionY;
@@ -401,19 +412,27 @@
       })
     }
     moveImgs();
+    console.log(lastYPos);
+    if (lastYPos !== 0){
+      const sep = document.createElement('div');
+      sep.classList.add('separator');
+      sep.style.top = lastYPos + 100 + "px";
+      console.log(lastYPos + "px")
+      document.getElementById('main-content').appendChild(sep)
+    }
     let scrollDone = false;
 
-    window.addEventListener("scroll", (event) => {
-      let scroll = this.scrollY;
-      if (!scrollDone && scroll > 500) {
-        moveImgs();
-        scrollDone = true;
-      }
-      if (scrollDone && scroll < 500) {
-        moveImgs();
-        scrollDone = false;
-      }
-    });
+    // window.addEventListener("scroll", (event) => {
+    //   let scroll = this.scrollY;
+    //   if (!scrollDone && scroll > 500) {
+    //     moveImgs();
+    //     scrollDone = true;
+    //   }
+    //   if (scrollDone && scroll < 500) {
+    //     moveImgs();
+    //     scrollDone = false;
+    //   }
+    // });
 
   }
 
