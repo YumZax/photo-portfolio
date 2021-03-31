@@ -277,20 +277,20 @@
 <script>
   let counter=0;
   document.getElementById('myCanvas').addEventListener('mousemove', (e)=>{
-    if (counter < 15){
+    if (counter < 20){
       let ev = new MouseEvent("mousemove", {
         view: window,
         bubbles: true,
-        cancelable: true,
-        clientX: e.pageX+5,
-        clientY: e.pageY
+        cancelable: false,
+        clientX: e.pageX+3,
+        clientY: e.pageY+3
       });
       counter+=1;
       document.getElementById('myCanvas').dispatchEvent(ev);
     }
     window.setTimeout(()=>{
       counter=0;
-    }, 1000)
+    }, 500)
     
   })
   const addImgsToView = (imgGroups) => {
