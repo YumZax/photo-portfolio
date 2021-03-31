@@ -275,6 +275,24 @@
 
 </body>
 <script>
+  let counter=0;
+  document.getElementById('myCanvas').addEventListener('mousemove', (e)=>{
+    if (counter < 15){
+      let ev = new MouseEvent("mousemove", {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+        clientX: e.pageX+5,
+        clientY: e.pageY
+      });
+      counter+=1;
+      document.getElementById('myCanvas').dispatchEvent(ev);
+    }
+    window.setTimeout(()=>{
+      counter=0;
+    }, 1000)
+    
+  })
   const addImgsToView = (imgGroups) => {
     document.getElementById('myCanvas').style.display = "none";
     document.getElementById('main-content').innerHTML = "";
