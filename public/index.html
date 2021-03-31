@@ -176,6 +176,9 @@
       display: block;
       height: 500px;
     }
+    .medium-zoom-image--opened{
+      z-index: 1000;
+    }
   </style>
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <!-- <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet"> -->
@@ -271,11 +274,13 @@
       for (const img of imgGroup) {
         const imgEl = document.createElement('img')
         imgEl.setAttribute('src', img);
+        imgEl.dataset.zoomable = "true";
         imgEl.dataset.grpNo = grpNo;
         document.getElementById('main-content').appendChild(imgEl)
       }
       grpNo += 1;
       bindImageMovement();
+      mediumZoom('[data-zoomable]');
     }
     
     
@@ -472,4 +477,6 @@
 
     }
   </script>
+  <script src="medium-zoom.min.js"></script>
+
 </html>

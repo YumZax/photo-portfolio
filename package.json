@@ -23,6 +23,7 @@
   "homepage": "https://github.com/YumZax/juju#readme",
   "dependencies": {
     "http-server": "^0.12.3",
+    "medium-zoom": "^1.0.6",
     "paper": "^0.12.12"
   }
 }
