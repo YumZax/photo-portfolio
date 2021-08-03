@@ -2,9 +2,10 @@
 <html lang="en">
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Julia Weppler</title>
   <style>
-      body,
+    body,
     html {
       margin: 0;
       margin-top: 40px;
@@ -13,19 +14,50 @@
       font-family: 'Prompt', monospace;
       cursor: url(images/cursor/Sea_Vacation_Pixel_Cursor_small.png) 2 2, pointer;
       text-align: center;
-
     }
 
-    p{
+    p,
+    li {
       text-align: justify;
-      margin-left: 15%;
-      margin-top: 100px;
-      margin-right: 15%;
-      margin-bottom: 150px;
-      font-weight:200;
+      font-weight: 200;
     }
 
-    #back{
+    @media screen and (min-width: 1200px) {
+
+      p
+       {
+        margin-left: 300px;
+        margin-right: 300px;
+      }
+    }
+
+    @media screen and (max-width: 1199px) {
+
+      p
+       {
+        margin-left: 50px;
+        margin-right: 50px;
+      }
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    p.first {
+      margin-top: 100px;
+    }
+
+    .contact {
+      margin-top: 40px;
+    }
+
+    .publications p {
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+
+    #back {
       position: absolute;
       left: 2%;
       top: 0;
@@ -36,32 +68,56 @@
       cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer_small.png) 2 2, pointer;
     }
 
-    a:visited{
-        color: black;    
-      }
+    .publications {
+      margin-top: 100px;
+    }
 
-      p a{
-        color: #FD9BF6!important;
-        cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer_small.png) 2 2, pointer;
+    li {
+      list-style-type: none;
+      float: left;
+    }
 
-      }
+    a:visited {
+      color: black;
+    }
+
+    p a {
+      color: #FD9BF6 !important;
+      cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer_small.png) 2 2, pointer;
+
+    }
   </style>
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<!-- <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet"> -->
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@100;200;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@100;200;400&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <button onclick="window.history.back();" ontouchend="window.history.back();" id="back">←</button>
-  <img src="images/jpg/contact/IMG_0800.jpg"/>
-  <p><br/>
-    Julia Weppler is a 28 years old photographer who lives part time in Cologne (Germany) part time in Lille (France). After her three years stay in Berlin, where she got her bachelors degree in psychology, she switched the field and is currently working as a fashion photographer whilst studying photography at UdK Folkwang.<br/> <br/>
-In her mostly analogue work she tries to combine shapes and colors in detailed and sensitive ways. Her goal is to experiment with the form of the human body in combination with its surrounding. <br/><br/>
-
-
-For job inquiries contact: 
-<a href="mailto:juliaweppler@me.com">juliaweppler@me.com</a>
+  <img src="images/jpg/contact/IMG_0800.jpg" />
+  <p class="first">
+    <span class="gap"></span>Julia Weppler is a 28 years old photographer from Cologne (Germany) who is currently in her
+    last year of study at the Folkwang University of Arts.
+    <br /><br />She collaborates with companies, agencies and individuals in order to carry out their editorial
+    portraits, fashion shootings, interior photography and weddings.
+    <br><br>In addition to her commercial work she practices artistic photography by combining shapes and colors in
+    detailed and sensitive ways. Her goal is to experiment with the forms of the human body in combination with
+    textiles, objects and their general surroundings. The boundary between fashion and art photography is fluid and
+    intended in her work and doesn’t stand as a contradiction to her.
+    Influenced by the knowledge granted by her degree in psychology she makes her work go beyond surfaces and is
+    questioning and working with standards and norms that are shaping our society and us.
   </p>
+
+  <p class="contact">
+
+    contact : <a href="mailto:juliaweppler@me.com">juliaweppler@me.com</a>
+  </p>
+
+  <div class="publications">
+    <p>publications</p><br>
+    <p>01/2020 publication in <em>For You I Talk</em> book release, Galerie 52 Essen</p>
+    <p>03/2020 group exhibition <em>Folkwang zu Gast in Marburg</em></p>
+  </div>
+
 </body>
 
 </html>
