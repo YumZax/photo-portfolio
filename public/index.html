@@ -239,38 +239,12 @@
   </div>
   
   <div id="overlay"></div>
-  <canvas width="3000" height="1500" id="myCanvas"></canvas>
+  <canvas width="4500" height="2000" id="myCanvas"></canvas>
   <div id="main-content"></div>
   <div id="footer">
     © 2021 - Julia Weppler - All rights reserved
   </div>
   
-
-  <!-- <div class="img-group" id="sophia">
-      <img src="images/sophia_01028.jpg"></img>
-      <img src="images/sophia_01049 3.jpg"></img>
-      <img src="images/sophia_bot.garten032.jpg"></img>
-    </div>
-    <div class="img-group" id="jule">
-      <img src="images/jule_reifen_2019241.jpeg"></img>
-      <img src="images/jule_reifen_2019253.jpg"></img>
-      <img src="images/jule_reifen_2019254.jpg"></img>
-    </div>
-    <div class="img-group" id="scan">
-      <img src="images/scan069.jpg"></img>
-      <img src="images/scan073.jpg"></img>
-      <img src="images/scan074.jpg"></img>
-      <img src="images/scan105.jpg"></img>
-      <img src="images/scan106.jpg"></img>
-      <img src="images/scan111.jpg"></img>
-    </div>
-    <div class="img-group" id="prag">
-      <img src="images/prag35.tif"></img>
-      <img src="images/prag36.tif"></img>
-      <img src="images/prag38.tif"></img>
-
-    </div> -->
-
 
 
 </body>
@@ -483,8 +457,19 @@
 
     raster.visible = false;
     var lastPos = paper.view.center;
-
+    let progress=0;
     function moveHandler(event) {
+      progress+=1;
+      if (progress > 2250){
+        const drawnImage = new Image();
+        drawnImage.src = 'images/scan069.jpg'
+        const imWidth = document.getElementById('myCanvas').width
+        const imHeight = document.getElementById('myCanvas').height
+        document.getElementById('myCanvas').getContext('2d').fillStyle="white"
+        document.getElementById('myCanvas').getContext('2d').fillRect(0, 0, imWidth, imHeight)
+        document.getElementById('myCanvas').getContext('2d').drawImage(drawnImage, paper.view.bounds.width/24, -paper.view.bounds.height/2, paper.view.bounds.width/1.1, paper.view.bounds.height*2);
+        return
+      }
       if (!loaded)
         return;
       lastPos = event.point;
