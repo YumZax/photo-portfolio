@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Julia Weppler</title>
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      font-family: 'Prompt', monospace;
+      cursor: url(images/cursor/Sea_Vacation_Pixel_Cursor_small.png) 2 2, pointer;
+
+    }
+    body{
+      margin-bottom: 100px;
+    }
+    #footer{
+      position: fixed;
+      bottom: 0;
+      text-align: center;
+      opacity: .5;
+      width:100%;
+      background-color: white;
+      font-size: .5vw;
+    }
+    canvas {
+      position: absolute;
+      top: 15vw;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50vw;
+      height: 35vw;
+    }
+
+    #header {
+      padding: 0;
+      height: 100px;
+      margin: 0;
+      color: black;
+      padding-top: 50px;
+      position: fixed;
+      width: 100%;
+      z-index: 9999;
+      background-color: white;
+      opacity: .9;
+    }
+
+    #header .name{
+      font-size: 2.8vw;
+      padding-left: 5vw;
+      cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer_small.png) 2 2, pointer;
+    }
+    #header .contact{
+      position: absolute;
+      font-size: 15px;
+      right: 2vw;
+      top: 58px;
+      font-size: 1.3vw;
+      border:1px solid black;
+      padding:5px;
+      transform: translateX(-50%);
+      cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer_small.png) 2 2, pointer;
+    }
+    #main-content {
+      top: 150px;
+      padding-top: 100px;
+      margin-bottom: 100px;
+      margin-left: 20%;
+      width: 80%;
+      min-height: 100%;
+      position: relative;
+    }
+
+    #navbar {
+      display: flex;
+      width: 100%;
+    }
+
+    #navbar ul {
+      display: inline-flex;
+      width: 100%;
+      justify-content: space-evenly;
+      padding: 0;
+      background-color: white;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      padding-bottom: .2em;
+    }
+
+    #navbar li {
+      list-style: none;
+      font-size: 1.1vw;
+      user-select: none;
+      
+    }
+    
+    a:visited{
+        color: black;    
+      }
+
+      a{
+        color: black;
+        text-decoration: none;
+      }
+
+    .colorChoose{
+      position: relative;
+    }
+
+    @keyframes bounce{
+      0%{
+        left: 0;
+        opacity: .8;
+      }
+
+      50%{
+        left: 80%;
+        opacity: .3
+      }
+
+      100%{
+        left: 0;
+        opacity: .8
+      }
+    }
+
+      .colorChoose:hover:after{
+      content: "―";
+      position: absolute;
+      bottom: -50%;
+      left: 0;
+      animation-name: bounce;
+      animation-iteration-count: infinite;
+      animation-duration: 3s;
+    }  
+
+    
+
+    #overlay img {
+      width: 100%;
+    }
+
+
+
+    .img-group {
+      width: 100%;
+    }
+
+    .img-group img {
+      z-index: 1;
+      width: 100%;
+    }
+
+    /* SOPHIA */
+    #main-content img {
+      max-width: 25%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      margin-bottom: 100px;
+    }
+
+
+    #main-content img:hover {
+      position: absolute;
+      cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer_small.png) 2 2, pointer;
+      z-index: 999;
+    }
+
+    /* JULE */
+    #main-content img {
+      transition: left 2s, top 2s;
+    }
+
+    .clickable {
+      cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer_small.png) 2 2, pointer;
+    }
+
+    .separator {
+      display: block;
+      height: 500px;
+      position: absolute;
+      width: 100%;
+      z-index: -1;
+    }
+    .medium-zoom-image--opened{
+      z-index: 1000;
+    }
+  </style>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<!-- <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet"> -->
+<link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div id="header">
+    <div ontouchend="showCanvas()" onclick="showCanvas()" class="name">julia weppler</div>
+    
+    <a class="clickable contact" href="/contact">Contact</a>
+    
+    <nav id="navbar">
+      <ul>
+        <li ontouchend="loadImgs('blue')" onclick="loadImgs('blue')" class="colorChoose clickable" style="color: #4d92e5;">
+          blue
+        </li>
+        <li ontouchend="loadImgs('red')" onclick="loadImgs('red')" class="colorChoose clickable" style="color: #D64545;">
+          red
+        </li>
+        <li ontouchend="loadImgs('green')" onclick="loadImgs('green')" class="colorChoose clickable" style="color: #69b551;">
+          green
+        </li>
+        <li ontouchend="loadImgs('yellow')" onclick="loadImgs('yellow')" class="colorChoose clickable" style="color: #F9e156;">
+          yellow
+        </li>
+        <li ontouchend="loadImgs('orange')" onclick="loadImgs('orange')" class="colorChoose clickable" style="color: #Fc9c42;">
+          orange
+        </li>
+        <li ontouchend="loadImgs('pink')" onclick="loadImgs('pink')" class="colorChoose clickable" style="color: #E79ce9;">
+          pink
+        </li>
+        <li ontouchend="loadImgs('lilac')" onclick="loadImgs('lilac')" class="colorChoose clickable" style="color: #A397df;">
+          lilac
+        </li>
+        <li ontouchend="loadImgs('')" onclick="loadImgs('beige')" class="colorChoose clickable" style="color: #Ddc398;">
+          beige
+        </li>
+        <li ontouchend="loadImgs('white')" onclick="loadImgs('white')" class="colorChoose clickable" style="color: white; text-shadow: 4px 2px 8px #69b551">
+          white
+        </li>
+        <li ontouchend="loadImgs('black')" onclick="loadImgs('black')" class="colorChoose clickable" style="color: black;">
+          black
+        </li>
+     
+       
+      </ul>
+    </nav>
+  </div>
+  
+  <div id="overlay"></div>
+  <canvas width="4500" height="2000" id="myCanvas"></canvas>
+  <div id="main-content"></div>
+  <div id="footer">
+    © 2021 - Julia Weppler - All rights reserved
+  </div>
+  
+
+
+</body>
+<script>
+  let counter=0;
+  document.getElementById('myCanvas').addEventListener('mousemove', (e)=>{
+    if (counter < 20){
+      let ev = new MouseEvent("mousemove", {
+        view: window,
+        bubbles: true,
+        cancelable: false,
+        clientX: e.pageX+3,
+        clientY: e.pageY+3
+      });
+      counter+=1;
+      document.getElementById('myCanvas').dispatchEvent(ev);
+    }
+    window.setTimeout(()=>{
+      counter=0;
+    }, 500)
+    
+  })
+  const addImgsToView = (imgGroups) => {
+    document.getElementById('myCanvas').style.display = "none";
+    document.getElementById('main-content').innerHTML = "";
+    let grpNo = 0;
+    for (const imgGroup of imgGroups){
+      for (const img of imgGroup) {
+        const imgEl = document.createElement('img')
+        imgEl.setAttribute('src', img);
+        imgEl.dataset.zoomable = "true";
+        imgEl.dataset.grpNo = grpNo;
+        document.getElementById('main-content').appendChild(imgEl)
+      }
+      grpNo += 1;
+      bindImageMovement();
+
+    }
+    mediumZoom('[data-zoomable]');
+    
+    
+  }
+
+
+  const showCanvas = () => {
+    document.getElementById('main-content').innerHTML = ""
+    document.getElementById('myCanvas').style.display = "block";
+  }
+
+  const loadImgs = (color) => {
+    switch (color) {
+      case "beige":
+        // addImgsToView([
+        //   ["images/jpg/nude1.jpg","images/jpg/nude2.jpg"],
+        //   ["images/jpg/nude4.jpg", "images/jpg/nude5.jpg","images/jpg/nude6.jpg"],
+        //   ["images/jpg/nude3.jpg"],
+        //   ["images/jpg/trois/beige01.jpeg", "images/jpg/trois/beige02.jpeg", "images/jpg/trois/beige03.jpeg"]
+        // ])
+        addImgsToView([
+          ["images/jpg/trois/beige01.jpeg", "images/jpg/trois/beige02.jpeg", "images/jpg/trois/beige03.jpeg"],
+          ["images/jpg/four/bei2.jpeg", "images/jpg/four/bei3.jpeg"]
+        ])
+        break;
+      case "pink":
+      //   addImgsToView([["images/jpg/pink1.jpg"],
+      //   ["images/jpg/trois/pink1.jpg", "images/jpg/trois/pink2.jpg", "images/jpg/trois/pink3.jpg"]
+      // ])
+      addImgsToView([
+        ["images/jpg/trois/pink2.jpg", "images/jpg/trois/pink3.jpg","images/jpg/four/pink_3.jpeg"],
+        ["images/jpg/five/pink.jpg", "images/jpg/five/pink2.jpg"]
+      ])
+        break;
+      case "blue":
+        // addImgsToView([[
+        // "images/jpg/trois/blue1.jpeg", "images/jpg/trois/blue1.jpg", "images/jpg/trois/blue2.jpeg", "images/jpg/trois/blue2.jpg", "images/jpg/trois/blue3.jpeg", "images/jpg/trois/blue3.jpg"
+        // ]])
+        addImgsToView([[
+        "images/jpg/trois/blue2.jpg", "images/jpg/trois/blue3.jpg",   "images/jpg/trois/blue1.jpg"
+            ]])
+        break;
+      case "green":
+      // addImgsToView([["images/jpg/green1.jpg", "images/jpg/green2.jpg", "images/jpg/green3.jpg",], ["images/jpg/green4 (alone).jpg"]])
+      addImgsToView([["images/jpg/green1.jpg", "images/jpg/green2.jpg", "images/jpg/green3.jpg",],
+    ])
+
+      break;
+      case "yellow":
+      //   addImgsToView([["images/jpg/yellow1.jpg", "images/jpg/yellow2.jpg", "images/jpg/yellow3 .jpg"],[
+      //     "images/jpg/yellow4.jpg", "images/jpg/yellow5.jpg"
+      //   ],
+      //   ["images/jpg/trois/yellow alone.jpeg"],
+      //   ["images/jpg/trois/yellow alone.jpg"],
+      //   ["images/jpg/trois/yellow01.jpg", "images/jpg/trois/yellow02.jpg","images/jpg/trois/yellow03.jpg"]
+      // ])
+      addImgsToView([[
+           "images/jpg/four/yellow2.jpg", "images/jpg/four/yellow_1_Kopie.jpg"
+        ], [
+          "images/jpg/four/yel1.jpeg", "images/jpg/four/yel2.jpeg"
+        ],
+        [
+          "images/jpg/five/yel.jpg"
+        ]
+      ])
+        break;
+      case "lilac":
+        // addImgsToView([["images/jpg/lilac1.jpg","images/jpg/lilac2.jpg","images/jpg/lilac3.jpg"]])
+        addImgsToView([["images/jpg/lilac2.jpg","images/jpg/four/lilac.jpg", "images/jpg/lilac3.jpg"]])
+
+        break;
+      case "orange":
+        // addImgsToView([
+        //   ["images/jpg/orange1.jpg", "images/jpg/orange2.jpg", "images/jpg/orange3.jpg"],
+        //   ["images/jpg/trois/orange alone.jpg"]
+        // ])
+        addImgsToView([
+          [ "images/jpg/four/orange 1.jpeg", "images/jpg/four/orange 3.jpeg"],
+        ])
+        break;
+      case "red":
+      //   addImgsToView([["images/jpg/red1.jpg", "images/jpg/red2.jpg"],
+      //   ["images/jpg/trois/red alone 2.jpeg"],
+      //   ["images/jpg/trois/red glass 1.jpeg", "images/jpg/trois/red glass 2.jpeg"],
+      //   ["images/jpg/trois/red1.jpg","images/jpg/trois/red2.jpeg","images/jpg/trois/red3.jpeg","images/jpg/trois/red4.jpeg"]
+      // ])
+      addImgsToView([
+        ["images/jpg/trois/blue1.jpeg","images/jpg/trois/blue2.jpeg","images/jpg/trois/blue3.jpeg"],
+        ["images/jpg/trois/red glass 1.jpeg", "images/jpg/trois/red glass 2.jpeg"],
+        ["images/jpg/five/red1.jpeg", "images/jpg/five/red2.jpeg"]
+      ])
+        break;
+      case "black":
+        // addImgsToView([
+        //   ["images/jpg/black1.jpg", "images/jpg/black2.jpg", "images/jpg/black3.jpg","images/jpg/black4.jpg"],
+        //   ["images/jpg/trois/black1.jpg", "images/jpg/trois/black01.jpg", "images/jpg/trois/black2.jpeg", "images/jpg/trois/black02.jpeg", "images/jpg/trois/black03.jpg"]
+        // ])
+        addImgsToView([
+          ["images/jpg/trois/black1.jpg", "images/jpg/four/black-1.jpg"],
+          ["images/jpg/trois/black03.jpg", "images/jpg/trois/black02.jpeg"]
+        ])
+        break;
+        case "white":
+        //   addImgsToView([["images/jpg/white1.jpg", "images/jpg/white2.jpg"],
+        //   ["images/jpg/trois/white alone.jpeg"]
+        // ])
+        addImgsToView([["images/jpg/white2.jpg","images/jpg/white1.jpg"],
+        ["images/jpg/four/whi1.jpg","images/jpg/four/whi2.jpg"]
+          
+        ])
+        break;
+    }
+  }
+
+  const bindImageMovement = () => {
+    let lastYPos = 0;
+    const imgCount = document.querySelectorAll('#main-content img').length;
+    const moveImgs = () => {
+      document.querySelectorAll('#main-content img').forEach((img, index) => {
+        img.style.position = "absolute";
+        const grpNo = img.dataset.grpNo;
+        const position = `${(index)*((100/imgCount) - 10) + Math.floor(Math.random()*((100/imgCount)))}%`;
+        lastYPos = Math.floor(Math.random()*500)+(grpNo * 1000)
+        const positionY = `${lastYPos}px`;
+        const imgSize = `${100+Math.floor(Math.random()*500)}px`;
+        img.style.left = position;
+        img.style.top = positionY;
+        img.style.width = imgSize;
+        img.style.visibility = "visible";
+      })
+    }
+    moveImgs();
+    console.log(lastYPos);
+    if (lastYPos !== 0){
+      const sep = document.createElement('div');
+      sep.classList.add('separator');
+      sep.style.top = lastYPos + 100 + "px";
+      console.log(lastYPos + "px")
+      document.getElementById('main-content').appendChild(sep)
+    }
+    let scrollDone = false;
+
+    // window.addEventListener("scroll", (event) => {
+    //   let scroll = this.scrollY;
+    //   if (!scrollDone && scroll > 500) {
+    //     moveImgs();
+    //     scrollDone = true;
+    //   }
+    //   if (scrollDone && scroll < 500) {
+    //     moveImgs();
+    //     scrollDone = false;
+    //   }
+    // });
+
+  }
+
+</script>
+<script type="text/javascript" src="paper-full.js"></script>
+  <script>
+    var canvas = document.getElementById('myCanvas');
+    paper.setup(canvas);
+
+    var raster = new paper.Raster({
+      "source": 'images/scan069.jpg',
+    });
+    var loaded = false;
+
+    raster.on('load', function () {
+      loaded = true;
+      onResize();
+    });
+
+    raster.visible = false;
+    var lastPos = paper.view.center;
+    let progress=0;
+    function moveHandler(event) {
+      progress+=1;
+      if (progress > 2250){
+        const drawnImage = new Image();
+        drawnImage.src = 'images/scan069.jpg'
+        const imWidth = document.getElementById('myCanvas').width
+        const imHeight = document.getElementById('myCanvas').height
+        document.getElementById('myCanvas').getContext('2d').fillStyle="white"
+        document.getElementById('myCanvas').getContext('2d').fillRect(0, 0, imWidth, imHeight)
+        document.getElementById('myCanvas').getContext('2d').drawImage(drawnImage, paper.view.bounds.width/24, -paper.view.bounds.height/2, paper.view.bounds.width/1.1, paper.view.bounds.height*2);
+        return
+      }
+      if (!loaded)
+        return;
+      lastPos = event.point;
+      var size = this.bounds.size.clone();
+      var isLandscape = size.width > size.height;
+      if (isLandscape) {
+        size.width = size.width / 2
+      } else {
+        size.height = size.height / 2
+      }
+      var path = new paper.Path.Rectangle({
+        point: this.bounds.topLeft.floor(),
+        size: size.ceil(),
+        onMouseMove: moveHandler
+      });
+      path.fillColor = raster.getAverageColor(path);
+      var path = new paper.Path.Rectangle({
+        point: isLandscape ?
+          this.bounds.topCenter.ceil() : this.bounds.leftCenter.ceil(),
+        size: size.floor(),
+        onMouseMove: moveHandler
+      });
+      path.fillColor = raster.getAverageColor(path);
+      this.remove();
+    }
+
+    function onResize(event) {
+      if (!loaded)
+        return;
+      paper.project.activeLayer.removeChildren();
+      raster.fitBounds(paper.view.bounds, true);
+
+      new paper.Path.Rectangle({
+        rectangle: paper.view.bounds,
+        fillColor: raster.getAverageColor(paper.view.bounds),
+        onMouseMove: moveHandler
+      });
+
+    }
+  </script>
+  <script src="medium-zoom.min.js"></script>
+
+</html>
