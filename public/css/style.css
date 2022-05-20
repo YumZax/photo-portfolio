@@ -41,13 +41,15 @@ canvas {
   opacity: .9;
 }
 
-#header .name{
-  font-size: 5.6vh;
-  padding-left: 10vh;
-  cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer_small.png) 2 2, pointer;
-}
+
 
 @media only screen and (min-width: 801px){
+    #header .name{
+        font-size: 5.6vh;
+        padding-left: 10vh;
+        cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer_small.png) 2 2, pointer;
+      }
+
     #header .contact{
         height:80%;
         display: flex;
@@ -75,9 +77,17 @@ canvas {
         border:1px solid black;
         padding-left: 1vh;
         padding-right: 1vh;
-        right:0;
+        left: 50%;
+        transform:translate(-50%,-50%);
         margin-right: 10vh;
-        top:100%;
+        top:150%;
+        cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer_small.png) 2 2, pointer;
+      }
+
+      #header .name{
+        width: 100%; 
+        text-align: center;
+        font-size: 5.6vh;
         cursor: url(images/cursor/Sea_Vacation_Pixel_Pointer_small.png) 2 2, pointer;
       }
 }
@@ -87,7 +97,8 @@ canvas {
   top: 150px;
   padding-top: 400px;
   margin-bottom: 100px;
-  margin-left: 20%;
+  margin-left: 10%;
+  margin-right: 10%;
   width: 80%;
   min-height: 100%;
   position: relative;
